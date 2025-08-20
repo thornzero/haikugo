@@ -3,8 +3,11 @@
 [![Go Version](https://img.shields.io/github/go-mod/go-version/thornzero/haikugo)](https://golang.org/)
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 [![Go Report Card](https://goreportcard.com/badge/github.com/thornzero/haikugo)](https://goreportcard.com/report/github.com/thornzero/haikugo)
+[![Project Status](https://img.shields.io/badge/status-community--maintained-brightgreen)](https://github.com/thornzero/haikugo)
 
 A comprehensive Go library and CLI tool for analyzing and validating haiku poems. HaikuGo provides syllable counting, structure validation, and detection of traditional haiku elements like kireji (cutting words) and kigo (season words).
+
+**Note**: This project was created with AI assistance and is community-maintained. Feel free to use it, contribute to it, or fork it for your own needs!
 
 ## Features
 
@@ -304,13 +307,17 @@ analyzer.SetTolerance(1)
 
 ## Contributing
 
-1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/amazing-feature`)
-3. Make your changes and add tests
-4. Run the full test suite (`make all`)
-5. Commit your changes (`git commit -m 'Add amazing feature'`)
-6. Push to the branch (`git push origin feature/amazing-feature`)
-7. Open a Pull Request
+This project was created with AI assistance and is maintained by the community. We welcome contributions of all kinds!
+
+### How to Contribute
+
+1. **Fork the repository**
+2. **Create a feature branch** (`git checkout -b feature/amazing-feature`)
+3. **Make your changes** and add tests
+4. **Run the full test suite** (`make all`)
+5. **Commit your changes** (`git commit -m 'Add amazing feature'`)
+6. **Push to the branch** (`git push origin feature/amazing-feature`)
+7. **Open a Pull Request**
 
 ### Development Guidelines
 
@@ -319,17 +326,38 @@ analyzer.SetTolerance(1)
 - Update documentation for public APIs
 - Run `make all` before submitting PRs
 
+### Community Maintenance
+
+This project is community-maintained. If you find it useful, consider:
+- Reporting bugs or suggesting features
+- Contributing code improvements
+- Helping with documentation
+- Sharing it with others who might find it useful
+
+**Note**: The original implementation was created with AI assistance, but all contributions and improvements are welcome from the community!
+
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
 ## Acknowledgments
 
-- Inspired by the traditional Japanese art of haiku poetry
-- Syllable counting algorithms adapted from various linguistic research
-- Built with love for both programming and poetry
+- **Original Concept**: Inspired by the traditional Japanese art of haiku poetry
+- **Implementation**: Created with AI assistance to explore the intersection of poetry and technology
+- **Community**: Open source and community-maintained for anyone who finds it useful
+- **Inspiration**: Built with appreciation for both programming and poetry
+
+### Project Origins
+
+This project started as an exploration of how AI could help implement a creative idea - a tool to analyze and validate haiku poetry. While the initial implementation was AI-assisted, the project is designed to be community-driven and welcomes contributions from anyone who finds value in it.
+
+**Note**: This is not a commercial project or a full-time maintenance commitment. It's shared in the spirit of open source collaboration and the hope that others might find it useful or interesting.
 
 ## Roadmap
+
+This roadmap represents potential directions the community might take the project. Since this is community-maintained, priorities and implementation depend on community interest and contributions.
+
+### Potential Features
 
 - [ ] Japanese syllable/mora counting
 - [ ] Web interface
@@ -337,6 +365,13 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - [ ] Batch processing capabilities
 - [ ] Advanced linguistic analysis
 - [ ] Integration with popular text editors
+
+### Community-Driven Development
+
+- **No Pressure**: This is not a roadmap with deadlines or commitments
+- **Community Interest**: Features get implemented based on what people actually want to use
+- **Contributions Welcome**: If you want a feature, consider implementing it or finding someone who can help
+- **Natural Evolution**: The project grows organically based on real usage and community needs
 
 ---
 
