@@ -1,0 +1,128 @@
+name: CI
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  test:
+    name: Test
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        go-version: [1.24.x, 1.23.x]
+
+    steps:
+    - name: Set up Go ${{ matrix.go-version }}
+      uses: actions/setup-go@v4
+      with:
+        go-version: ${{ matrix.go-version }}
+
+    - name: Check out code
+      uses: actions/checkout@v4
+
+    - name: Cache Go modules
+      uses: actions/cache@v3
+      with:
+        path: ~/go/pkg/mod
+        key: ${{ runner.os }}-go-${{ hashFiles('**/go.sum') }}
+        restore-keys: |
+          ${{ runner.os }}-go-
+
+    - name: Download dependencies
+      run: go mod download
+
+    - name: Run tests
+      run: go test -v -race -coverprofile=coverage.out ./...
+
+    - name: Upload coverage to Codecov
+      if: matrix.go-version == '1.24.x'
+      uses: codecov/codecov-action@v3
+      with:
+        file: ./coverage.out
+        flags: unittests
+        name: codecov-umbrella
+
+  lint:
+    name: Lint
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Check out code
+      uses: actions/checkout@v4
+
+    - name: Set up Go
+      uses: actions/setup-go@v4
+      with:
+        go-version: 1.24.x
+
+    - name: golangci-lint
+      uses: golangci/golangci-lint-action@v3
+      with:
+        version: latest
+        args: --timeout=5m
+
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    needs: [test, lint]
+
+    steps:
+    - name: Check out code
+      uses: actions/checkout@v4
+
+    - name: Set up Go
+      uses: actions/setup-go@v4
+      with:
+        go-version: 1.24.x
+
+    - name: Build
+      run: go build -v ./cmd/haikuctl
+
+    - name: Test CLI
+      run: |
+        echo -e "an old silent pond\na frog jumps into the pond\nsplash silence again" | ./haikuctl
+        echo -e "an old silent pond\na frog jumps into the pond\nsplash silence again" | ./haikuctl --json
+
+  integration:
+    name: Integration Tests
+    runs-on: ubuntu-latest
+    needs: build
+
+    steps:
+    - name: Check out code
+      uses: actions/checkout@v4
+
+    - name: Set up Go
+      uses: actions/setup-go@v4
+      with:
+        go-version: 1.24.x
+
+    - name: Build
+      run: go build -o haikuctl ./cmd/haikuctl
+
+    - name: Test file input
+      run: |
+        echo -e "cherry blossoms fall\ndancing in the spring breeze\npetals kiss the earth" > test.txt
+        ./haikuctl --file test.txt
+        ./haikuctl --file test.txt --json
+
+    - name: Test autosplit
+      run: |
+        ./haikuctl --autosplit "old pond / frog jumps in / splash"
+
+    - name: Test tolerance
+      run: |
+        echo -e "too many syllables here\nseven syllables in this line\nfive more to end" | ./haikuctl --tolerant=2
+
+    - name: Test exit codes
+      run: |
+        echo -e "an old silent pond\na frog jumps into the pond\nsplash silence again" | ./haikuctl --exit-code
+        if echo -e "invalid\nhaiku here\nnot right" | ./haikuctl --exit-code; then
+          echo "Should have failed!"
+          exit 1
+        else
+          echo "Exit code test passed"
+        fi
